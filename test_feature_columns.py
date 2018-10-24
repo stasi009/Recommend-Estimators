@@ -88,6 +88,7 @@ def test_weighted_cate_column():
         id_sparse_value, weight_sparse_value = sess.run([x_sparse_tensor.id_tensor, x_sparse_tensor.weight_tensor])
 
         print("************************* sparse id tensor")
+        # sparse tensor's id_tensor保持与原始输入相同的形状，[batch_size, max_tokens_per_example]=[2,4]
         # SparseTensorValue(indices=array(
         #       [[0, 0],
         #        [0, 1],
@@ -99,6 +100,7 @@ def test_weighted_cate_column():
         print(id_sparse_value)
 
         print("************************* sparse weight tensor")
+        # sparse tensor's weight_tensor保持与原始输入相同的形状，[batch_size, max_tokens_per_example]=[2,4]
         # SparseTensorValue(indices=array(
         #       [[0, 0],
         #        [0, 1],
@@ -110,6 +112,8 @@ def test_weighted_cate_column():
         print(weight_sparse_value)
 
         print("************************* dense MHE tensor")
+        # indicator_column将sparse tensor按照MHE的方式转化成dense tensor，shape=[batch_size, total_tokens_in_vocab]
+        # 其中的每个数值是该token出现的所有权重的总和
         # [[-2.  0.  4.]
         #  [ 0. -3.  0.]]
         print(sess.run(x_dense_tensor))
