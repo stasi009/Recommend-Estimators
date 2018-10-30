@@ -57,7 +57,7 @@ def build_embedding_table(params):
 
 def output_logits_from_linear(features, embedding_table, params):
     field2vocab_mapping = params['field_vocab_mapping']
-    combiner = params['multi_embed_combiner']
+    combiner = params.get('multi_embed_combiner', 'sum')
 
     fields_outputs = []
     # 当前field下有一系列的<tag:value>对，每个tag对应一个bias（待优化），
@@ -91,7 +91,11 @@ def output_logits_from_linear(features, embedding_table, params):
 
 def output_logits_from_bi_interaction(features, embedding_table, params):
     field2vocab_mapping = params['field_vocab_mapping']
-    combiner = params['multi_embed_combiner']
+
+    # 论文上的公式就是要求sum，而且我也试过mean和sqrtn，都比用mean要差上很多
+    # 但是，这种情况，仅仅是针对criteo数据的，还是理论上就必须用sum，而不能用mean和sqrtn
+    # 我还不太确定，所以保留一个接口能指定其他combiner的方法
+    combiner = params.get('multi_embed_combiner', 'sum')
 
     # 见《Neural Factorization Machines for Sparse Predictive Analytics》论文的公式(4)
     fields_embeddings = []

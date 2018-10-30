@@ -21,7 +21,6 @@ def get_hparams():
         'vocab_sizes': vocab_sizes,
         # 在这个case中，没有多个field共享同一个vocab的情况，而且field_name和vocab_name相同
         'field_vocab_mapping': {'numeric': 'numeric', 'categorical': 'categorical'},
-        'multi_embed_combiner': 'sum',
         'dropout_rate': 0.3,
         'batch_norm': False,
         'hidden_units': [64, 32],
