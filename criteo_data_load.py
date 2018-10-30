@@ -28,7 +28,7 @@ def _decode_tsv(line):
         feat_ids = tf.string_to_number(feat_ids, out_type=tf.int32)
         feat_vals = tf.string_to_number(feat_vals, out_type=tf.float32)
 
-        # 不能调用reshape, reshape的限制太多, 当原始矩阵有1行或0行时，reshape都会报错
+        # 不能调用squeeze, squeeze的限制太多, 当原始矩阵有1行或0行时，squeeze都会报错
         X[colname + "_ids"] = tf.reshape(feat_ids, shape=[-1])
         X[colname + "_values"] = tf.reshape(feat_vals, shape=[-1])
 
